@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediScan - Prescription Fraud Detection System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .upload-area {
+            border: 3px dashed #3B82F6;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #2563EB;
+            background-color: #EFF6FF;
+        }
+        .result-box {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .result-box.open {
+            max-height: 500px;
+        }
+        .loader {
+            border-top-color: #3B82F6;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/866ec2be-653f-4de8-aaa9-fc69a229e5e0.png" alt="MediScan logo featuring a blue shield with a checkmark symbol" class="h-12 w-12 rounded-lg">
+                <h1 class="ml-4 text-2xl font-bold text-gray-800">MediScan <span class="text-blue-600">Rx</span></h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-8">
+                    <li><a href="#" class="text-blue-600 font-medium">Home</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-600">About</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-blue-600">How It Works</a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-blue-600">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Prescription Fraud Detection System</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Protect patients and reduce healthcare fraud by detecting suspicious prescriptions with our advanced AI-powered verification system.
+            </p>
+            <div class="mt-8">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 text-center shadow-lg">
+                    <h3 class="text-2xl font-bold text-white mb-4">Get Started in 3 Simple Steps</h3>
+                    <ol class="flex flex-wrap justify-center gap-8 text-white">
+                        <li class="flex items-center">
+                            <span class="flex items-center justify-center w-10 h-10 bg-white text-blue-600 rounded-full font-bold mr-2">1</span>
+                            Register your pharmacy
+                        </li>
+                        <li class="flex items-center">
+                            <span class="flex items-center justify-center w-10 h-10 bg-white text-blue-600 rounded-full font-bold mr-2">2</span>
+                            Complete verification
+                        </li>
+                        <li class="flex items-center">
+                            <span class="flex items-center justify-center w-10 h-10 bg-white text-blue-600 rounded-full font-bold mr-2">3</span>
+                            Start scanning prescriptions
+                        </li>
+                    </ol>
+                    <button class="mt-6 bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-blue-100 transition duration-200">
+                        Register Now <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Upload Prescription Data</h3>
+                    <p class="text-gray-600 mb-6">
+                        Submit prescription details in CSV format. Our system will analyze medication details, dosages, patient information and doctor signatures for potential fraud indicators.
+                    </p>
+                    <div class="upload-area p-12 text-center rounded-lg cursor-pointer mb-4" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-2"></i>
+                        <p class="text-lg font-medium text-gray-700">Drag & drop prescription file here</p>
+                        <p class="text-sm text-gray-500 mt-1">or click to browse files (CSV, PDF, or image)</p>
+                        <input type="file" id="prescriptionFile" class="hidden" accept=".csv,.pdf,.png,.jpg,.jpeg">
+                    </div>
+                    <div id="progressBar" class="hidden mt-4 bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Our Verification Process</h3>
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="font-medium text-gray-900 text-lg mb-2">1. Prescription Submission</h4>
+                            <p class="text-gray-600">
+                                Submit prescriptions through our secure portal or mobile app. We accept scanned images, photos, or digital files.
+                            </p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="font-medium text-gray-900 text-lg mb-2">2. AI-Powered Analysis</h4>
+                            <p class="text-gray-600">
+                                Our system checks against 7 key security markers including signature verification, medication patterns, and prescriber history.
+                            </p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h4 class="font-medium text-gray-900 text-lg mb-2">3. Detailed Report</h4>
+                            <p class="text-gray-600">
+                                Receive a comprehensive report highlighting any anomalies and recommended actions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-box bg-white rounded-xl shadow-md overflow-hidden p-8 mb-12 transition-all duration-500" id="resultBox">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-semibold text-gray-800">Analysis Results</h3>
+                <div id="resultStatus" class="px-4 py-2 rounded-full font-medium inline-flex items-center">
+                    <!-- Status will be inserted here -->
+                </div>
+            </div>
+            <div id="resultContent">
+                <!-- Results will be inserted here -->
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 mb-12">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Commonly Faked Medications</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-medium text-lg mb-2">Pain Medications</h4>
+                    <ul class="text-gray-600 space-y-1">
+                        <li>Oxycodone (OxyContin)</li>
+                        <li>Hydrocodone (Vicodin)</li>
+                        <li>Tramadol (Ultram)</li>
+                    </ul>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-medium text-lg mb-2">Mental Health</h4>
+                    <ul class="text-gray-600 space-y-1">
+                        <li>Alprazolam (Xanax)</li>
+                        <li>Adderall (Amphetamine)</li>
+                        <li>Zolpidem (Ambien)</li>
+                    </ul>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-medium text-lg mb-2">Other Categories</h4>
+                    <ul class="text-gray-600 space-y-1">
+                        <li>Testosterone</li>
+                        <li>Growth Hormone</li>
+                        <li>Viagra</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-8 mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">98%</div>
+                    <div class="text-gray-600">Detection Accuracy</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">10K+</div>
+                    <div class="text-gray-600">Verified Providers</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">24/7</div>
+                    <div class="text-gray-600">Monitoring</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/592de368-ac0f-4492-8245-eed8b0be8130.png" alt="FDA Approved Badge" class="h-12">
+                    </div>
+                    <div class="text-gray-600 mt-2">Certified System</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 mb-12" id="contact">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Contact Us</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Get in Touch</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-full p-2">
+                                <i class="fas fa-phone-alt text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h5 class="font-medium text-gray-900">Phone</h5>
+                                <p class="text-gray-600 mt-1">
+                                    <a href="tel:7741007812">+91 7741007812</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-full p-2">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h5 class="font-medium text-gray-900">Email</h5>
+                                <p class="text-gray-600 mt-1">
+                                    <a href="mailto:support@mediscan.com">support@mediscan.com</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-full p-2">
+                                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h5 class="font-medium text-gray-900">Address</h5>
+                                <p class="text-gray-600 mt-1">
+                                    123 Healthcare Plaza, Medical District,<br>
+                                    Mumbai, Maharashtra 400001
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Send Us a Message</h4>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-200">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5be98a3f-da12-48ca-a83b-11971d0a3ce3.png" alt="MediScan logo in white" class="h-10 w-10 rounded-lg mr-3">
+                        MediScan Rx
+                    </h3>
+                    <p class="text-gray-300">
+                        Leading the fight against prescription fraud with advanced AI technology and forensic analysis.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Services</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        &copy; 2023 MediScan Rx. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('prescriptionFile');
+            const resultBox = document.getElementById('resultBox');
+            const resultStatus = document.getElementById('resultStatus');
+            const resultContent = document.getElementById('resultContent');
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = progressBar.querySelector('div');
+
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('border-blue-500', 'bg-blue-50');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('border-blue-500', 'bg-blue-50');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('border-blue-500', 'bg-blue-50');
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileUpload();
+                }
+            });
+
+            // Handle click to select file
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', handleFileUpload);
+
+            function handleFileUpload() {
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                // Show loading state
+                uploadArea.innerHTML = `
+                    <div class="flex flex-col items-center">
+                        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-2"></div>
+                        <p class="text-gray-700">Analyzing ${file.name}...</p>
+                    </div>
+                `;
+                progressBar.classList.remove('hidden');
+
+                // Simulate upload progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress > 100) progress = 100;
+                    progressFill.style.width = `${progress}%`;
+
+                    if (progress === 100) {
+                        clearInterval(interval);
+                        simulateAnalysis(file);
+                    }
+                }, 300);
+            }
+
+            function simulateAnalysis(file) {
+                setTimeout(() => {
+                    // This would be replaced with actual API call to your backend
+                    const isFraudulent = Math.random() > 0.7; // 30% chance of being fraudulent for demo
+                    
+                    // Show results
+                    resultBox.classList.add('open');
+                    
+                    if (isFraudulent) {
+                        resultStatus.innerHTML = `
+                            <span class="bg-red-100 text-red-800">Fraud Detected</span>
+                            <i class="fas fa-exclamation-triangle ml-2 text-red-500"></i>
+                        `;
+                        resultContent.innerHTML = `
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-exclamation-circle text-red-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h4 class="text-sm font-medium text-red-800">Potential fraud detected with 86% confidence</h4>
+                                        <div class="mt-2 text-sm text-red-700">
+                                            <ul class="list-disc pl-5 space-y-1">
+                                                <li>Inconsistent doctor signature pattern</li>
+                                                <li>Suspicious medication quantity anomaly</li>
+                                                <li>Patient history mismatch</li>
+                                                <li>Unusual prescription pattern for this provider</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-2">Recommended Actions</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                        <div class="flex items-center mb-2">
+                                            <div class="bg-blue-100 rounded-full p-2 mr-3">
+                                                <i class="fas fa-user-md text-blue-600"></i>
+                                            </div>
+                                            <h5 class="font-medium">Verify with Prescriber</h5>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Contact the prescribing doctor to confirm validity</p>
+                                    </div>
+                                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                        <div class="flex items-center mb-2">
+                                            <div class="bg-blue-100 rounded-full p-2 mr-3">
+                                                <i class="fas fa-search text-blue-600"></i>
+                                            </div>
+                                            <h5 class="font-medium">Check Patient History</h5>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Review previous prescriptions for this patient</p>
+                                    </div>
+                                    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                        <div class="flex items-center mb-2">
+                                            <div class="bg-blue-100 rounded-full p-2 mr-3">
+                                                <i class="fas fa-flag text-blue-600"></i>
+                                            </div>
+                                            <h5 class="font-medium">Report Suspicion</h5>
+                                        </div>
+                                        <p class="text-sm text-gray-600">File report with regulatory authorities if needed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        resultStatus.innerHTML = `
+                            <span class="bg-green-100 text-green-800">Verified</span>
+                            <i class="fas fa-check-circle ml-2 text-green-500"></i>
+                        `;
+                        resultContent.innerHTML = `
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-check-circle text-green-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h4 class="text-sm font-medium text-green-800">Prescription verified with 94% confidence</h4>
+                                        <div class="mt-2 text-sm text-green-700">
+                                            <p>No significant fraud indicators detected in this prescription.</p>
+                                        <p class="mt-2">Medications verified: 
+                                            <span class="font-medium">Amoxicillin 500mg</span> (antibiotic), 
+                                            <span class="font-medium">Lisinopril 10mg</span> (blood pressure),
+                                            <span class="font-medium">Metformin 850mg</span> (diabetes)
+                                        </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-green-100 rounded-full p-3 mr-3">
+                                        <i class="fas fa-thumbs-up text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-900">Good Practices Observed</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Doctor signature matches records • Medication dosage within normal range • Patient history consistent</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Reset upload area
+                    setTimeout(() => {
+                        uploadArea.innerHTML = `
+                            <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-2"></i>
+                            <p class="text-lg font-medium text-gray-700">Drag & drop prescription file here</p>
+                            <p class="text-sm text-gray-500 mt-1">or click to browse files (CSV, PDF, or image)</p>
+                        `;
+                        progressBar.classList.add('hidden');
+                        progressFill.style.width = '0%';
+                    }, 1000);
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

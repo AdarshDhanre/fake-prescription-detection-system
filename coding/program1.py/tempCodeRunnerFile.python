@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trendy and Affordable Fashion">
+  <meta name="author" content="">
+  <title>FashionHut - E-commerce Clothing Store</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header-area">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">FashionHut</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#shop">Shop</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#cart">Cart</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-section text-center py-5">
+    <div class="container">
+      <h1>Style Meets Comfort</h1>
+      <p>Discover the latest trends in fashion with affordable prices</p>
+      <a href="#shop" class="btn btn-primary">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section id="shop" class="products py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="assets/images/product1.jpg" class="card-img-top" alt="T-Shirt">
+            <div class="card-body">
+              <h5 class="card-title">Casual T-Shirt</h5>
+              <p class="card-text">Rs. 499</p>
+              <button class="btn btn-success">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="assets/images/product2.jpg" class="card-img-top" alt="Jeans">
+            <div class="card-body">
+              <h5 class="card-title">Denim Jeans</h5>
+              <p class="card-text">Rs. 999</p>
+              <button class="btn btn-success">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="assets/images/product3.jpg" class="card-img-top" alt="Dress">
+            <div class="card-body">
+              <h5 class="card-title">Summer Dress</h5>
+              <p class="card-text">Rs. 799</p>
+              <button class="btn btn-success">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="about-section py-5 bg-light">
+    <div class="container">
+      <h2>About FashionHut</h2>
+      <p>FashionHut is your one-stop shop for trendy and affordable clothing. Whether you're looking for casual wear, workwear, or party wear, we’ve got you covered.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact-section py-5">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>Call us at <strong>7741007812</strong> or email us at <strong>dhanre40@gmail.com</strong></p>
+      <form action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+          </div>
+          <div class="form-group col-md-6">
+            <input type="email" class="form-control" name="email" placeholder="Email" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" name="message" rows="4" placeholder="Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-4">
+    <div class="container">
+      <p>&copy; 2025 FashionHut. All Rights Reserved. | Contact: 7741007812 | Email: dhanre40@gmail.com</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
